@@ -1,11 +1,15 @@
-import { build, emptyDir } from "dnt";
+import { build } from "dnt";
+import { copy, emptyDir } from "fs";
 
 import denoconfig from "./deno.json" assert { type: "json" };
 
 await emptyDir("./npm");
 
 await build({
-  entryPoints: ["./mod.ts"],
+  entryPoints: ["./mod.ts", {
+    name: "./vite",
+    path: "./src/vite/mod.ts",
+  }],
   outDir: "./npm",
   typeCheck: true,
   declaration: true,
@@ -26,22 +30,30 @@ await build({
     },
     homepage: `https://github.com/${denoconfig.package.github}#readme`,
     license: "MIT",
+    bin: "./bin.js",
     main: "./esm/mod.js",
     types: "./types/mod.d.ts",
     exports: {
       ".": {
         "import": "./esm/mod.js",
-        "require": "./script/mod.js",
+      },
+      "./vite": {
+        "import": "./esm/src/vite/mod.js",
       },
       "./package.json": "./package.json",
     },
     keywords: [
       denoconfig.package.name,
+      "svelte-kit",
+      "sveltekit",
+      "svelte",
+      "modal",
+      "python",
     ],
     engines: {
       "node": ">=16.0.0",
     },
-    author: denoconfig.package.github.split('/')[0],
+    author: denoconfig.package.github.split("/")[0],
     bugs: {
       url: `https://github.com/${denoconfig.package.github}/issues`,
     },
@@ -49,5 +61,9 @@ await build({
 });
 
 // post build steps
-Deno.copyFileSync("LICENSE.md", "npm/LICENSE.md");
-Deno.copyFileSync("README.md", "npm/README.md");
+await copy("LICENSE.md", "npm/LICENSE.md");
+await copy("README.md", "npm/README.md");
+await copy("src/bin.mjs", "npm/bin.mjs");
+await copy("src/vite/sveltekit_modal_deploy.py", "npm/esm/src/vite/sveltekit_modal_deploy.py");
+await copy("src/vite/sveltekit_modal_serve.py", "npm/esm/src/vite/sveltekit_modal_serve.py");
+await copy("src/vite/sveltekit_modal", "npm/esm/src/vite/sveltekit_modal");

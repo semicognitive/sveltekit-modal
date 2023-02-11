@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "sveltekit-modal"
+version = "0.1.0"
+description = ""
+authors = ["Conner <conner@semicognitive.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+langchain = "^0.0.69"
+weaviate-client = "^3.11.0"
+urllib3 = "^1.26.12"
+beautifulsoup4 = "^4.11.1"
+transformers = "^4.25.1"
+isort = "^5.11.4"
+openai = "^0.26.1"
+tiktoken = "^0.1.2"
+bs4 = "^0.0.1"
+
+[tool.ruff]
+line-length = 140
+
+[tool.black]
+line-length = 140
+
+[tool.autopep8]
+max_line_length = 140
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

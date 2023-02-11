@@ -1,8 +1,8 @@
 {
   "package": {
-    "name": "es-package",
-    "description": "A template for creating and publishing an ES module",
-    "github": "semicognitive/es-package"
+    "name": "sveltekit-modal",
+    "description": "Write Python endpoints in SvelteKit using Modal",
+    "github": "semicognitive/sveltekit-modal"
   },
   "tasks": {
     "test": "deno test --lock-write --allow-all --parallel test/",

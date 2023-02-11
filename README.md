@@ -1,8 +1,8 @@
 <img width="800" alt="image" src="https://user-images.githubusercontent.com/20548516/215316618-bcb365fa-d4d7-49d8-8832-21ed849e2060.png">
 
-# es-package
+# sveltekit-modal
 
-The ultimate template for creating and publishing an ES module
+Write Python endpoints in SvelteKit using Modal
 
 Start by [using this template](https://github.com/semicognitive/es-package/generate)
 

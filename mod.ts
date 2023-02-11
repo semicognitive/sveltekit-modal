@@ -1,1 +1,1 @@
-export { greet } from './src/example.ts';
+export default true;

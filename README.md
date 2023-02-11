@@ -10,6 +10,7 @@ Made with [this template](https://github.com/semicognitive/es-package/generate)
 Start deploying Python endpoints, with GPU support for an entire ML Stack in your app, in just a few steps.r
 
 - Install `npm i -D sveltekit-modal`
+- Sign up for [modal.com](https://modal.com/signup), the serverless python platform. All users get $30 free monthly credits!
 - Update `vite.config.js`
 ```javascript
 import { sveltekit } from '@sveltejs/kit/vite';

@@ -31,8 +31,6 @@ await build({
     homepage: `https://github.com/${denoconfig.package.github}#readme`,
     license: "MIT",
     bin: "./bin.js",
-    main: "./esm/mod.js",
-    types: "./types/mod.d.ts",
     exports: {
       ".": {
         "import": "./esm/mod.js",
@@ -59,6 +57,12 @@ await build({
     bugs: {
       url: `https://github.com/${denoconfig.package.github}/issues`,
     },
+    dependencies: {
+      "zx": "^7.0.0",
+    },
+    peerDependencies: {
+      "vite": "^4.0.0",
+    },
   },
 });
 
@@ -66,12 +70,6 @@ await build({
 await copy("LICENSE.md", "npm/LICENSE.md");
 await copy("README.md", "npm/README.md");
 await copy("src/bin.mjs", "npm/bin.mjs");
-await copy(
-  "src/vite/sveltekit_modal_deploy.py",
-  "npm/esm/src/vite/sveltekit_modal_deploy.py",
-);
-await copy(
-  "src/vite/sveltekit_modal_serve.py",
-  "npm/esm/src/vite/sveltekit_modal_serve.py",
-);
+await copy("src/vite/sveltekit_modal_deploy.py", "npm/esm/src/vite/sveltekit_modal_deploy.py");
+await copy("src/vite/sveltekit_modal_serve.py", "npm/esm/src/vite/sveltekit_modal_serve.py");
 await copy("src/vite/sveltekit_modal", "npm/esm/src/vite/sveltekit_modal");

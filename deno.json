@@ -1,0 +1,28 @@
+{
+  "package": {
+    "name": "es-package",
+    "description": "A template for creating and publishing an ES module",
+    "github": "semicognitive/es-package"
+  },
+  "tasks": {
+    "test": "deno test --lock-write --allow-all --parallel test/",
+    "dnt": "deno run -A dnt.ts $(git describe --tags $(git rev-list --tags --max-count=1))"
+  },
+  "importMap": "import-map.json",
+  "compilerOptions": {
+    "lib": ["es2021", "dom", "dom.iterable"],
+    "strict": true
+  },
+  "fmt": {
+    "files": {
+      "include": ["README.md", "mod.ts", "dnt.ts", "deno.json", "import-map.json", "src/"],
+      "exclude": []
+    }
+  },
+  "lint": {
+    "files": {
+      "include": ["mod.ts", "dnt.ts", "src/"],
+      "exclude": []
+    }
+  }
+}

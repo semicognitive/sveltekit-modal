@@ -1,0 +1,13 @@
+{
+  "files.exclude": {
+    ".replit": true, 
+    "replit.nix": true, 
+    ".vscode": true, 
+    ".deno": true,
+    ".github": true,
+    ".gitignore": true,
+    "LICENSE.md": true,
+    "deno.lock": true,
+    "dnt.ts": true
+  }
+}

@@ -1,0 +1,1 @@
+export { greet } from './src/example.ts';

@@ -42,6 +42,15 @@ await build({
       },
       "./package.json": "./package.json",
     },
+    //Legacy manual stuff for moduleResolution: node
+    "types": "./types/mod.d.ts",
+    "typesVersions": {
+      "*": {
+        "vite": [
+          "./types/src/vite/mod.d.ts",
+        ],
+      },
+    },
     keywords: [
       denoconfig.package.name,
       "svelte-kit",
@@ -70,6 +79,12 @@ await build({
 await copy("LICENSE.md", "npm/LICENSE.md");
 await copy("README.md", "npm/README.md");
 await copy("src/bin.mjs", "npm/bin.mjs");
-await copy("src/vite/sveltekit_modal_deploy.py", "npm/esm/src/vite/sveltekit_modal_deploy.py");
-await copy("src/vite/sveltekit_modal_serve.py", "npm/esm/src/vite/sveltekit_modal_serve.py");
+await copy(
+  "src/vite/sveltekit_modal_deploy.py",
+  "npm/esm/src/vite/sveltekit_modal_deploy.py",
+);
+await copy(
+  "src/vite/sveltekit_modal_serve.py",
+  "npm/esm/src/vite/sveltekit_modal_serve.py",
+);
 await copy("src/vite/sveltekit_modal", "npm/esm/src/vite/sveltekit_modal");

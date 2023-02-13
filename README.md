@@ -1,15 +1,14 @@
-<img width="800" alt="image" src="https://user-images.githubusercontent.com/20548516/215316618-bcb365fa-d4d7-49d8-8832-21ed849e2060.png">
+<img width="200" alt="image" src="https://user-images.githubusercontent.com/20548516/218344678-d41f4c4a-6b1b-48cc-8553-2b9fbe2169d6.png"/><img width="200" alt="image" src="https://user-images.githubusercontent.com/20548516/218344596-1e2e7142-200c-4733-a67c-25c7cfcc36dd.png"/>
 
 # sveltekit-modal
-
-Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](https://modal.com)
-
-Made with [this template](https://github.com/semicognitive/es-package/generate)
+Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](https://modal.com).
 
 ## Why
-- Start deploying **Python endpoints** in **just a few steps**.
+- Start deploying **Python endpoints** in **just a few steps**
 - GPU support for an entire ML Stack in your SvelteKit app
-- 
+- Integrates completely, write `+server.py` just like your `+server.js` files
+- Deploy the rest of your app anywhere, with [SvelteKit's adapters for Vercel, Netlify, Cloudflare, etc.](https://kit.svelte.dev/docs/adapters)
+- Severless Python with [ease](https://kit.svelte.dev/docs/adapters)
 
 ## Add to your SvelteKit project
 - Install `npm i -D sveltekit-modal`

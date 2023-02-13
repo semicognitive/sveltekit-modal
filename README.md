@@ -52,4 +52,9 @@ Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](htt
       }
     }
     ```
+  - Update `.gitignore`, add `!.env.production`.
   - Write your endpoints! See an example [here]().
+
+## Use
+- Develop like a normal SvelteKit app, just `npm run dev`
+- Deploy all your python endpoints with one command, just `npx sveltekit-modal deploy`

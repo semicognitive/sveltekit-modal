@@ -1,10 +1,10 @@
-#!/usr/bin/env zx
+#!/usr/bin/env zx --install
 
 import 'zx/globals';
 
 import { parse, stringify } from 'envfile';
 
-const cmd = process.argv[3];
+const cmd = argv._[0];
 switch (cmd) {
     case "deploy":
         $.verbose = true;
@@ -15,12 +15,12 @@ switch (cmd) {
             else return
         }
 
-        cd('src/lib/vite')
+        cd(path.join('.', 'node_modules', 'sveltekit-modal', 'esm/src/vite'))
 
         const deploy_log = await $`python3 sveltekit_modal_deploy.py`;
         const modal_route_match = deploy_log.stdout.match(/https:\/\/.*?\.modal\.run/)?.toString();
 
-        cd('../../..')
+        cd(path.join('..', '..', '..', '../../..'))
 
         await fs.ensureFile('.env.production')
 

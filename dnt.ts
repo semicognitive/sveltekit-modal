@@ -30,7 +30,7 @@ await build({
     },
     homepage: `https://github.com/${denoconfig.package.github}#readme`,
     license: "MIT",
-    bin: "./bin.js",
+    bin: "./bin.mjs",
     exports: {
       ".": {
         "import": "./esm/mod.js",

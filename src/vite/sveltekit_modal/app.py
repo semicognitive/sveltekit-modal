@@ -4,7 +4,8 @@ import glob
 import importlib
 import importlib.util
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
 import modal
 
@@ -30,7 +31,28 @@ for module_path in glob.glob('./sveltekit_modal/src/routes/**/*.py', recursive=T
 
     mod = importlib.import_module(module_name, module_package)
 
-    web_app.add_api_route(module_route, importlib.import_module(module_name, module_package).POST, methods=["POST"])
+    if hasattr(mod, 'GET'):
+        web_app.add_api_route(module_route, mod.GET, methods=["GET"])
+
+    if hasattr(mod, 'POST'):
+        web_app.add_api_route(module_route, mod.POST, methods=["POST"])
+
+    if hasattr(mod, 'PATCH'):
+        web_app.add_api_route(module_route, mod.PATCH, methods=["PATCH"])
+
+    if hasattr(mod, 'PUT'):
+        web_app.add_api_route(module_route, mod.PUT, methods=["PUT"])
+
+    if hasattr(mod, 'DELETE'):
+        web_app.add_api_route(module_route, mod.DELETE, methods=["DELETE"])
+
+
+@web_app.exception_handler(Exception)
+async def unicorn_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={"error": f"{exc}"},
+    )
 
 
 @stub.asgi(**config.get('stub_asgi'))

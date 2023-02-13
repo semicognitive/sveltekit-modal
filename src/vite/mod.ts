@@ -2,13 +2,19 @@ import { loadEnv, type Plugin } from 'vite'
 import { type ProcessPromise, $ as run$, cd as cd$, fs, path, globby, chalk } from "zx";
 
 const get_pyServerEndpointAsString = (modal_url: URL) => `
-    export const POST = (async ({ request, fetch, url }) => {
+    const handle = (method) => (async ({ request, fetch, url }) => {
         const headers = new Headers()
         headers.append('content-type', request.headers.get('content-type'));
         headers.append('accept', request.headers.get('accept'));
-
-        return fetch(new URL(url.pathname + '?', new URL('${modal_url}')) + url.search, { headers, method: "POST", body: request.body, signal: request.signal, duplex: 'half' })
+    
+        return fetch(new URL(url.pathname + '?', new URL('${modal_url}')) + url.search, { headers, method, body: request.body, signal: request.signal, duplex: 'half' })
     });
+    
+    export const GET = handle('GET');
+    export const POST = handle('POST');
+    export const PATCH = handle('PATCH');
+    export const PUT = handle('PUT');
+    export const DELETE = handle('DELETE');
 `;
 
 export async function sveltekit_modal(): Promise<Plugin[]> {

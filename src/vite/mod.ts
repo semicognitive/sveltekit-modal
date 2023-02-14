@@ -1,5 +1,6 @@
 import { loadEnv, type Plugin } from 'vite'
 import { type ProcessPromise, $ as run$, cd as cd$, fs, path, globby, chalk } from "zx";
+import globsync from "rollup-plugin-globsync";
 
 const get_pyServerEndpointAsString = (modal_url: URL) => `
     const handle = (method) => (async ({ request, fetch, url }) => {
@@ -27,6 +28,22 @@ export async function sveltekit_modal(): Promise<Plugin[]> {
     }
 
     let modal_url: URL | undefined;
+
+    const plugin_glob_sync: Plugin = globsync({
+        patterns: [
+            "src/routes/**/*.py",
+            'sveltekit_modal_config.py',
+        ],
+        options: {
+            clean: true,
+            clean_ignore: [
+                './node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/__init__.py',
+                './node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/app.py',
+                './node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/config.py',
+                './node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/pyproject.toml',
+            ]
+        }
+    });
 
     const plugin_modal_serve: Plugin = {
         name: 'vite-plugin-sveltekit-modal-serve',
@@ -99,5 +116,5 @@ export async function sveltekit_modal(): Promise<Plugin[]> {
         },
     };
 
-    return [plugin_modal_serve, plugin_modal_build, plugin_py_server_endpoint];
+    return [plugin_glob_sync, plugin_modal_serve, plugin_modal_build, plugin_py_server_endpoint];
 };

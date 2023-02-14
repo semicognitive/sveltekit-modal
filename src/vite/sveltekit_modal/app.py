@@ -17,7 +17,7 @@ from sveltekit_modal.sveltekit_modal_config import config
 #config: Config = config_module.config
 
 web_app = FastAPI()
-stub = modal.Stub('sveltekit')
+stub = modal.Stub(config.get('name'))
 
 # Add all +server.py routes to web_app
 for module_path in glob.glob('./sveltekit_modal/src/routes/**/*.py', recursive=True):

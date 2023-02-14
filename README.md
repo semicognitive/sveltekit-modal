@@ -46,6 +46,7 @@ Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](htt
     import sveltekit_modal
 
     config: sveltekit_modal.Config = {
+      'name': 'sveltekit-example',
       'log': False,
       'stub_asgi': {
           'image': modal.Image.debian_slim()

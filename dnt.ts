@@ -68,7 +68,7 @@ await build({
     },
     dependencies: {
       "zx": "^7.0.0",
-      "rollup-plugin-globsync": "ConProgramming/rollup-plugin-globsync#8493339",
+      "rollup-plugin-globsync": "ConProgramming/rollup-plugin-globsync#a6976d5",
     },
     peerDependencies: {
       "vite": "^4.0.0",

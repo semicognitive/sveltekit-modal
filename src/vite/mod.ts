@@ -34,6 +34,7 @@ export async function sveltekit_modal(): Promise<Plugin[]> {
             "src/routes/**/*.py",
             'sveltekit_modal_config.py',
         ],
+        dest: './node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal',
         options: {
             clean: true,
             clean_ignore: [

@@ -35,16 +35,14 @@ export async function sveltekit_modal(): Promise<Plugin[]> {
             'sveltekit_modal_config.py',
         ],
         dest: './node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal',
-        options: {
-            clean: true,
-            clean_globs: [
-                './node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/**/*',
-                '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/__init__.py',
-                '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/app.py',
-                '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/config.py',
-                '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/pyproject.toml',
-            ]
-        }
+        clean: true,
+        clean_globs: [
+            './node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/**/*',
+            '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/__init__.py',
+            '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/app.py',
+            '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/config.py',
+            '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/pyproject.toml',
+        ]
     });
 
     const plugin_modal_serve: Plugin = {

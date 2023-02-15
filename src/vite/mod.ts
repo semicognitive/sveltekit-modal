@@ -1,5 +1,5 @@
 import { loadEnv, type Plugin } from 'vite'
-import { type ProcessPromise, $ as run$, cd as cd$, chalk } from "zx";
+import { type ProcessPromise, $ as run$, cd as cd$, path, chalk } from "zx";
 import globsync from "rollup-plugin-globsync";
 
 const get_pyServerEndpointAsString = (modal_url: URL) => `
@@ -54,6 +54,8 @@ export async function sveltekit_modal(): Promise<Plugin[]> {
             await kill_all_process();
         },
         async configureServer({ config }) {
+            const packagelocation = path.join(config.root, 'node_modules', 'sveltekit-modal', 'esm/src/vite');
+
             run$.verbose = false;
             run$.env.PYTHONDONTWRITEBYTECODE = '1';
 

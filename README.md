@@ -1,4 +1,4 @@
-<img width="200" alt="image" src="https://user-images.githubusercontent.com/20548516/218344678-d41f4c4a-6b1b-48cc-8553-2b9fbe2169d6.png"/><img width="200" alt="image" src="https://user-images.githubusercontent.com/20548516/218344596-1e2e7142-200c-4733-a67c-25c7cfcc36dd.png"/>
+<img width="200" alt="image" src="https://user-images.githubusercontent.com/20548516/218344678-d41f4c4a-6b1b-48cc-8553-2b9fbe2169d6.png"/><img width="200" alt="image" src="https://user-images.githubusercontent.com/20548516/219166985-96888b52-51de-4f6b-b37d-cc66264c40eb.png"/>
 
 # sveltekit-modal
 Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](https://modal.com).

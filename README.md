@@ -43,14 +43,13 @@ Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](htt
  - Create `sveltekit_modal_config.py`. The option `stub_asgi` is passed to [Modal](https://modal.com/docs/reference/modal.Stub#asgi). This is where you can define GPU acceleration, secrets, and an Image for pip installs, etc. Explore their [docs](https://modal.com/docs/guide)!
     ```python
     import modal
-    import sveltekit_modal
 
-    config: sveltekit_modal.Config = {
-      'name': 'sveltekit-example',
-      'log': False,
-      'stub_asgi': {
-          'image': modal.Image.debian_slim()
-      }
+    config = {
+        'name': 'sveltekit-example',
+        'log': False,
+        'stub_asgi': {
+            'image': modal.Image.debian_slim()
+        }
     }
     ```
   - Update `.gitignore`, add `!.env.production`.

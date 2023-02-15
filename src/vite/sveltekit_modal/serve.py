@@ -1,5 +1,11 @@
 import sys
-from .app import stub
+import traceback
+
+from synchronicity import Interface
+from modal.cli.app import _show_stub_ref_failure_help
+from modal_utils.async_utils import synchronizer
+from modal_utils.package_utils import NoSuchStub, import_stub, parse_stub_ref
+
 from .sveltekit_modal_config import config
 
 from watchfiles import DefaultFilter
@@ -39,4 +45,16 @@ class Logger(object):
 
 
 if __name__ == '__main__':
-    stub.serve(stdout=Logger(sys.stdout), show_progress=True)
+    parsed_stub_ref = parse_stub_ref('sveltekit_modal.app')
+    try:
+        stub = import_stub(parsed_stub_ref)
+    except NoSuchStub:
+        _show_stub_ref_failure_help(parsed_stub_ref)
+        sys.exit(1)
+    except Exception:
+        traceback.print_exc()
+        sys.exit(1)
+
+    _stub = synchronizer._translate_in(stub)
+    blocking_stub = synchronizer._translate_out(_stub, Interface.BLOCKING)
+    blocking_stub.serve(stdout=Logger(sys.stdout), show_progress=True)

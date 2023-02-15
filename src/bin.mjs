@@ -17,7 +17,7 @@ switch (cmd) {
 
         cd(path.join('.', 'node_modules', 'sveltekit-modal', 'esm/src/vite'))
 
-        const deploy_log = await $`python3 sveltekit_modal_deploy.py`;
+        const deploy_log = await $`python3 -m sveltekit_modal.deploy`;
         const modal_route_match = deploy_log.stdout.match(/https:\/\/.*?\.modal\.run/)?.toString();
 
         cd(path.join('..', '..', '..', '../../..'))

@@ -1,5 +1,5 @@
 import { loadEnv, type Plugin } from 'vite'
-import { type ProcessPromise, $ as run$, cd as cd$, fs, path, globby, chalk } from "zx";
+import { type ProcessPromise, $ as run$, cd as cd$, chalk } from "zx";
 import globsync from "rollup-plugin-globsync";
 
 const get_pyServerEndpointAsString = (modal_url: URL) => `
@@ -42,6 +42,8 @@ export async function sveltekit_modal(): Promise<Plugin[]> {
             '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/app.py',
             '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/config.py',
             '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/pyproject.toml',
+            '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/deploy.py',
+            '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/server.py',
         ]
     });
 
@@ -52,20 +54,12 @@ export async function sveltekit_modal(): Promise<Plugin[]> {
             await kill_all_process();
         },
         async configureServer({ config }) {
-            const packagelocation = path.join(config.root, 'node_modules', 'sveltekit-modal', 'esm/src/vite');
-
-            await fs.copy('sveltekit_modal_config.py', path.join(packagelocation, '/sveltekit_modal/sveltekit_modal_config.py'));
-
-            for (const file of await globby('src/routes/**/*.py')) {
-                await fs.copy(file, path.join(packagelocation, '/sveltekit_modal/', file));
-            }
-
             run$.verbose = false;
             run$.env.PYTHONDONTWRITEBYTECODE = '1';
 
             cd$(packagelocation)
 
-            const local_process: ProcessPromise = run$`python3 sveltekit_modal_serve.py`;
+            const local_process: ProcessPromise = run$`python3 -m sveltekit_modal.serve`;
             child_processes.push(local_process);
 
             cd$(config.root)

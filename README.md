@@ -8,7 +8,7 @@ Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](htt
 - GPU support for an entire ML Stack in your SvelteKit app
 - Integrates completely, write `+server.py` just like your `+server.js` files
 - Deploy the rest of your app anywhere, with [SvelteKit's adapters for Vercel, Netlify, Cloudflare, etc.](https://kit.svelte.dev/docs/adapters)
-- Severless Python with [ease](https://kit.svelte.dev/docs/adapters)
+- Serverless Python with [ease](https://kit.svelte.dev/docs/adapters)
 
 ## Add to your SvelteKit project
 - Open a [new](https://kit.svelte.dev/docs/creating-a-project) or **existing** SvelteKit Project

@@ -11,6 +11,7 @@ Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](htt
 - Severless Python with [ease](https://kit.svelte.dev/docs/adapters)
 
 ## Add to your SvelteKit project
+- Open a [new](https://kit.svelte.dev/docs/creating-a-project) or **existing** SvelteKit Project
 - Install `npm i -D sveltekit-modal`
 - Sign up for [modal.com](https://modal.com/signup), the serverless python platform. All users get $30 free monthly credits!
 - Update `vite.config.js`
@@ -53,7 +54,7 @@ Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](htt
     }
     ```
   - Update `.gitignore`, add `!.env.production`.
-  - Write your endpoints! See an example [here]().
+  - Write your endpoints! See an example [here](https://github.com/semicognitive/sveltekit-modal-langchain).
 
 ## Use
 - Develop like a normal SvelteKit app, just `npm run dev`

@@ -1,7 +1,23 @@
 import sys
-from sveltekit_modal.app import stub
-from sveltekit_modal.sveltekit_modal_config import config
+from .app import stub
+from .sveltekit_modal_config import config
 
+from watchfiles import DefaultFilter
+
+DefaultFilter.ignore_dirs = (
+    '__pycache__',
+    '.git',
+    '.hg',
+    '.svn',
+    '.tox',
+    '.venv',
+    'site-packages',
+    '.idea',
+    #'node_modules',
+    '.mypy_cache',
+    '.pytest_cache',
+    '.hypothesis',
+)
 
 class Logger(object):
     def __init__(self, stream):
@@ -23,4 +39,4 @@ class Logger(object):
 
 
 if __name__ == '__main__':
-    stub.deploy(stdout=Logger(sys.stdout), show_progress=True)
+    stub.serve(stdout=Logger(sys.stdout), show_progress=True)

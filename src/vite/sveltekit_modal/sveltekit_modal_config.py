@@ -1,7 +1,6 @@
 import modal
-import sveltekit_modal
 
-config: sveltekit_modal.Config = {
+config = {
     'name': 'sveltekit-example',
     'log': False,
     'stub_asgi': {

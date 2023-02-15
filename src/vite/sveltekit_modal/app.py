@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 
 import modal
 
-from sveltekit_modal.sveltekit_modal_config import config
+from .sveltekit_modal_config import config
 
 #spec = importlib.util.spec_from_file_location(name="sveltekit_modal",  location="sveltekit_modal.config.py")
 #config_module = importlib.util.module_from_spec(spec)

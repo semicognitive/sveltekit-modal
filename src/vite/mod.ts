@@ -43,7 +43,7 @@ export async function sveltekit_modal(): Promise<Plugin[]> {
             '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/config.py',
             '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/pyproject.toml',
             '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/deploy.py',
-            '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/server.py',
+            '!./node_modules/sveltekit-modal/esm/src/vite/sveltekit_modal/serve.py',
         ]
     });
 

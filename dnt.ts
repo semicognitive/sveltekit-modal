@@ -80,12 +80,4 @@ await build({
 await copy("LICENSE.md", "npm/LICENSE.md");
 await copy("README.md", "npm/README.md");
 await copy("src/bin.mjs", "npm/bin.mjs");
-await copy(
-  "src/vite/sveltekit_modal_deploy.py",
-  "npm/esm/src/vite/sveltekit_modal_deploy.py",
-);
-await copy(
-  "src/vite/sveltekit_modal_serve.py",
-  "npm/esm/src/vite/sveltekit_modal_serve.py",
-);
 await copy("src/vite/sveltekit_modal", "npm/esm/src/vite/sveltekit_modal");

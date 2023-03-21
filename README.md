@@ -59,3 +59,9 @@ Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](htt
 ## Use
 - Develop like a normal SvelteKit app, just `npm run dev`
 - Deploy all your python endpoints with one command, just `npx sveltekit-modal deploy`
+
+## Examples
+
+The `example_app/` directory contains an incredibly bare and demonstrates how to get it working.
+
+- [semicognitive/sveltekit-modal-langchain](https://github.com/semicognitive/sveltekit-modal-langchain) demonstrates a nice version of the library with [langchain](https://github.com/hwchase17/langchain) and [tailwindcss](https://tailwindcss.com/)

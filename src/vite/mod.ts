@@ -26,7 +26,7 @@ const get_pyServerEndpointAsString = (modal_url: URL) => `
 `;
 
 export interface SveltekitModalOptions {
-  python?: string;
+  python_path?: string;
 }
 
 export async function sveltekit_modal(
@@ -76,7 +76,7 @@ export async function sveltekit_modal(
 
       cd$(packagelocation);
 
-      const python_path = opts.python ?? (await which("python"));
+      const python_path = opts.python_path ?? (await which("python"));
       const local_process: ProcessPromise = run$`${python_path} -m sveltekit_modal.serve`;
       child_processes.push(local_process);
 

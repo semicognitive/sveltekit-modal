@@ -76,7 +76,7 @@ export async function sveltekit_modal(
 
       cd$(packagelocation);
 
-      const python_path = opts.python_path ?? (await which("python"));
+      const python_path = opts.python_path ?? (await which("python3"));
       const local_process: ProcessPromise = run$`${python_path} -m sveltekit_modal.serve`;
       child_processes.push(local_process);
 

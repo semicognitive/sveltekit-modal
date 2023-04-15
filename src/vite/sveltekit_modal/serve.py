@@ -1,10 +1,8 @@
 import sys
-import traceback
 
 from synchronicity import Interface
-from modal.cli.app import _show_stub_ref_failure_help
-from modal_utils.async_utils import synchronizer
-from modal_utils.package_utils import NoSuchStub, import_stub, parse_stub_ref
+from modal.cli.import_refs import import_stub
+from modal._live_reload import run_serve_loop
 
 from .sveltekit_modal_config import config
 
@@ -19,11 +17,12 @@ DefaultFilter.ignore_dirs = (
     '.venv',
     'site-packages',
     '.idea',
-    #'node_modules',
+    # 'node_modules',
     '.mypy_cache',
     '.pytest_cache',
     '.hypothesis',
 )
+
 
 class Logger(object):
     def __init__(self, stream):
@@ -45,16 +44,4 @@ class Logger(object):
 
 
 if __name__ == '__main__':
-    parsed_stub_ref = parse_stub_ref('sveltekit_modal.app')
-    try:
-        stub = import_stub(parsed_stub_ref)
-    except NoSuchStub:
-        _show_stub_ref_failure_help(parsed_stub_ref)
-        sys.exit(1)
-    except Exception:
-        traceback.print_exc()
-        sys.exit(1)
-
-    _stub = synchronizer._translate_in(stub)
-    blocking_stub = synchronizer._translate_out(_stub, Interface.BLOCKING)
-    blocking_stub.serve(stdout=Logger(sys.stdout), show_progress=True)
+    run_serve_loop('sveltekit_modal.app', stdout=Logger(sys.stdout), show_progress=True)

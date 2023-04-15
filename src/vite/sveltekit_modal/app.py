@@ -55,6 +55,7 @@ async def unicorn_exception_handler(request: Request, exc: Exception):
     )
 
 
-@stub.asgi(**config.get('stub_asgi'))
+@stub.function(**config.get('stub_asgi'))
+@stub.asgi_app()
 def app():
     return web_app

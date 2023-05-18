@@ -1,2 +1,4 @@
 .deno
 npm
+
+*.DS_Store

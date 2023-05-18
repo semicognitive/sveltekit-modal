@@ -1,67 +1,191 @@
-<img width="200" alt="image" src="https://user-images.githubusercontent.com/20548516/218344678-d41f4c4a-6b1b-48cc-8553-2b9fbe2169d6.png"/><img width="200" alt="image" src="https://user-images.githubusercontent.com/20548516/219166985-96888b52-51de-4f6b-b37d-cc66264c40eb.png"/>
+<img width="100" alt="image" src="https://user-images.githubusercontent.com/20548516/218344678-d41f4c4a-6b1b-48cc-8553-2b9fbe2169d6.png"/>
+<img width="100" alt="image" src="https://camo.githubusercontent.com/f1ac9955f30176e6183aeeeac1b77354c7a132696fdc77c06ef0f0bec30f258c/68747470733a2f2f6861636b616461792e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031392f30392f707974686f6e2d6c6f676f2e706e67"/>
+<img width="100" alt="image" src="https://camo.githubusercontent.com/add2c9721e333f0043ac938f3dadbc26a282776e01b95b308fcaba5afaf74ae3/68747470733a2f2f6173736574732e76657263656c2e636f6d2f696d6167652f75706c6f61642f76313538383830353835382f7265706f7369746f726965732f76657263656c2f6c6f676f2e706e67"/>
 
-# sveltekit-modal
-Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) using [Modal](https://modal.com).
+# sveltekit-python-vercel
 
-## Why
-- Start deploying **Python endpoints** in **just a few steps**
-- GPU support for an entire ML Stack in your SvelteKit app
-- Integrates completely, write `+server.py` just like your `+server.js` files
-- Deploy the rest of your app anywhere, with [SvelteKit's adapters for Vercel, Netlify, Cloudflare, etc.](https://kit.svelte.dev/docs/adapters)
-- Serverless Python with [ease](https://kit.svelte.dev/docs/adapters)
+Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) and seamlessly deploy them to Vercel.
 
-## Add to your SvelteKit project
-- Open a [new](https://kit.svelte.dev/docs/creating-a-project) or **existing** SvelteKit Project
-- Install `npm i -D sveltekit-modal`
-- Sign up for [modal.com](https://modal.com/signup), the serverless python platform. All users get $30 free monthly credits!
-- Update `vite.config.js`
+**This is very much in beta.**
+
+## Current Features
+
+- Write `+server.py` files nearly the same way you would write `+server.js` files
+- These functions deploy automatically to Vercel Serverless
+
+## Installing
+
+- Open or set up your SvelteKit project
+- Install with `npm i -D sveltekit-python-vercel`
+- Update your `vite.config.js`
+
   ```javascript
-  import { sveltekit } from '@sveltejs/kit/vite';
-  import { defineConfig } from 'vite';
+  import { defineConfig } from "vite";
+  import { sveltekit } from "@sveltejs/kit/vite";
+  import { sveltekit_python_vercel } from "sveltekit-python-vercel/vite";
 
-  import { sveltekit_modal } from 'sveltekit-modal/vite'; //Add this import
-
-  export default defineConfig({
-	  plugins: [sveltekit_modal(), sveltekit()] //Add the `sveltekit_modal()` plugin
+  export default defineConfig(({ command, mode }) => {
+    return {
+      plugins: [sveltekit_python_vercel(), sveltekit()],
+    };
   });
   ```
-- Update `svelte.config.js`
+
+- Update your `svelte.config.js`:
+
   ```javascript
-  import adapter from '@sveltejs/adapter-auto';
-  import { vitePreprocess } from '@sveltejs/kit/vite';
+  import adapter from "@sveltejs/adapter-vercel";
+  import { vitePreprocess } from "@sveltejs/kit/vite";
 
   /** @type {import('@sveltejs/kit').Config} */
   const config = {
-	  preprocess: vitePreprocess(),
-	  kit: {
-		  adapter: adapter(),
-		  moduleExtensions: [".js", ".ts", ".py"] //Add this line, to resolve +server.py endpoints
-	  }
+    preprocess: vitePreprocess(),
+    kit: {
+      adapter: adapter(),
+      moduleExtensions: [".js", ".ts", ".py"], // add ".py" to resolve +server.py endpoints
+    },
   };
 
   export default config;
   ```
- - Create `sveltekit_modal_config.py`. The option `stub_asgi` is passed to [Modal](https://modal.com/docs/reference/modal.Stub#asgi). This is where you can define GPU acceleration, secrets, and an Image for pip installs, etc. Explore their [docs](https://modal.com/docs/guide)!
-    ```python
-    import modal
 
-    config = {
-        'name': 'sveltekit-example',
-        'log': False,
-        'stub_asgi': {
-            'image': modal.Image.debian_slim()
+- Update your `vercel.json`
+  - The build command prepares all your endpoints and copies them to the `/api` directory where Vercel looks for functions
+  - Functions and Routes tell Vercel how to run and redirect function calls
+  ```json
+  {
+    "buildCommand": "node ./node_modules/sveltekit-python-vercel/esm/src/vite/sveltekit_python_vercel/bin.mjs; vite build",
+    "functions": {
+      "api/**/*.py": {
+        "runtime": "@vercel/python@3.0.7"
+      }
+    },
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "api/index.py"
+      }
+    ]
+  }
+  ```
+
+- Write some `+server.py` endpoints. See the example section below.
+
+## Testing Locally
+Using [Poetry](https://python-poetry.org/) to manage your virtual environments with this package is recommended. 
+
+- Run `poetry init` to create a new virtual environment, and follow the steps. Or simply create a `pyproject.toml` like the one below.
+
+  ```toml
+  [tool.poetry]
+  name = "sveltekit-python-example"
+  version = "0.1.0"
+  description = ""
+  authors = ["Your Name <email@gmail.com>"]
+  readme = "README.md"
+
+  [tool.poetry.dependencies]
+  python = "^3.9"
+  fastapi = "^0.95.1"
+  uvicorn = "^0.22.0"
+
+
+  [build-system]
+  requires = ["poetry-core"]
+  build-backend = "poetry.core.masonry.api"
+  ```
+- Required packages are python3.9 (that is what Vercel's runtime uses), `fastapi`, and `uvicorn`.
+- Install whatever other dependencies you need from pypi using `poetry add package-name`
+
+- Run `pnpm dev` or `npm dev`
+
+
+## Example
+
+- Frontend: `/src/routes/py/+page.svelte`
+  ```html
+  <script lang="ts">
+    let a = 0;
+    let b = 0;
+    let total = 0;
+
+    async function pyAddPost() {
+      const response = await fetch('/py', {
+        method: 'POST',
+        body: JSON.stringify({ a, b }),
+        headers: {
+          'content-type': 'application/json'
         }
+      });
+      let res = await response.json();
+      total = res.sum;
     }
-    ```
-  - Update `.gitignore`, add `!.env.production`.
-  - Write your endpoints! See an example [here](https://github.com/semicognitive/sveltekit-modal-langchain).
 
-## Use
-- Develop like a normal SvelteKit app, just `npm run dev`
-- Deploy all your python endpoints with one command, just `npx sveltekit-modal deploy`
+    async function pyAddGet() {
+      const response = await fetch(`/py?a=${a}&b=${b}`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json'
+        }
+      });
 
-## Examples
+      let res = await response.json();
+      total = res.sum;
+    }
+  </script>
 
-The `example_app/` directory contains an incredibly bare and demonstrates how to get it working.
+  <h1>This is a SvelteKit page with a python backend.</h1>
 
-- [semicognitive/sveltekit-modal-langchain](https://github.com/semicognitive/sveltekit-modal-langchain) demonstrates a nice version of the library with [langchain](https://github.com/hwchase17/langchain) and [tailwindcss](https://tailwindcss.com/)
+  <h3>POST Example</h3>
+  <form>
+    <input type="number" name="a" placeholder="Number 1" bind:value={a} />
+    <input type="number" name="b" placeholder="Number 2" bind:value={b} />
+    <button on:click|preventDefault={pyAddPost}>Add</button>
+  </form>
+  <h4>Total: {total}</h4>
+
+  <br />
+
+  <h3>GET Example</h3>
+  <form>
+    <input type="number" name="a" placeholder="Number 1" bind:value={a} />
+    <input type="number" name="b" placeholder="Number 2" bind:value={b} />
+    <button on:click|preventDefault={pyAddGet}>Add</button>
+  </form>
+  <h4>Total: {total}</h4>
+  ```
+
+- Backend: `/src/routes/py/+server.py`
+  ```python
+  from pydantic import BaseModel
+
+
+  class NumberSet(BaseModel):
+      a: float
+      b: float
+
+
+  async def POST(numberSet: NumberSet):
+      return {"sum": float(numberSet.a) + float(numberSet.b)}
+
+
+  async def GET(a, b):
+      return {"sum": float(a) + float(b)}
+
+  ```
+
+## Caveats
+
+There are currently a few things that have to be worked around.
+
+## Fork of `sveltekit-modal`
+
+Check out the awesome [sveltekit-modal](https://github.com/semicognitive/sveltekit-modal) package by [@semicognitive](https://github.com/semicognitive), the original way to get your python code running in SvelteKit. Modal even has GPU support for running an entire ML stack within SvelteKit.
+
+## Possible future plans
+
+- [ ] Generate endpoints (/api folder) automatically during build
+  - [ ] Auto create requirements.txt from pyproject.toml (both related to vercel functions being checked/handled before build)
+- [ ] Add form actions
+- [ ] Add load functions
+- [ ] Add helper functions to automatically call API endpoints in project

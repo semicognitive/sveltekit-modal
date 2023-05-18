@@ -1,10 +1,11 @@
 {
   "package": {
-    "name": "sveltekit-modal",
-    "description": "Write Python endpoints in SvelteKit using Modal",
-    "github": "semicognitive/sveltekit-modal"
+    "name": "sveltekit-python-vercel",
+    "description": "Write Sveltekit server endpoints in Python and seamlessly deploy to Vercel",
+    "github": "astrojarred/sveltekit-python-vercel"
   },
   "tasks": {
+    "build": "deno run -A dnt.ts",
     "test": "deno test --lock-write --allow-all --parallel test/",
     "dnt": "deno run -A dnt.ts $(git describe --tags $(git rev-list --tags --max-count=1))"
   },
@@ -14,15 +15,18 @@
     "strict": true
   },
   "fmt": {
-    "files": {
-      "include": ["README.md", "mod.ts", "dnt.ts", "deno.json", "import-map.json", "src/"],
-      "exclude": []
-    }
+    "include": [
+      "README.md",
+      "mod.ts",
+      "dnt.ts",
+      "deno.json",
+      "import-map.json",
+      "src/"
+    ],
+    "exclude": []
   },
   "lint": {
-    "files": {
-      "include": ["mod.ts", "dnt.ts", "src/"],
-      "exclude": []
-    }
+    "include": ["mod.ts", "dnt.ts", "src/"],
+    "exclude": []
   }
 }

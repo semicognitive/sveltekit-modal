@@ -1,9 +1,8 @@
 {
- "imports": {
-    "dnt": "https://deno.land/x/dnt@0.33.0/mod.ts",
-    "fs": "https://deno.land/std@0.177.0/fs/mod.ts",
+  "imports": {
+    "dnt": "https://deno.land/x/dnt@0.34.0/mod.ts",
+    "fs": "https://deno.land/std@0.186.0/fs/mod.ts",
     "vite": "npm:vite@^4.0.0",
-		"zx": "npm:zx@^7.0.0",
-    "rollup-plugin-globsync": "npm:rollup-plugin-globsync@^2.1.0"
+    "zx": "npm:zx@^7.0.0"
   }
 }

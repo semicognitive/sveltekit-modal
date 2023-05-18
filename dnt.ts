@@ -1,7 +1,7 @@
-import { build } from "dnt";
-import { copy, emptyDir } from "fs";
+import {build} from "dnt";
+import {copy, emptyDir} from "fs";
 
-import denoconfig from "./deno.json" assert { type: "json" };
+import denoconfig from "./deno.json" assert {type: "json"};
 
 await emptyDir("./npm");
 
@@ -30,7 +30,6 @@ await build({
     },
     homepage: `https://github.com/${denoconfig.package.github}#readme`,
     license: "MIT",
-    bin: "./bin.mjs",
     exports: {
       ".": {
         "import": "./esm/mod.js",
@@ -56,7 +55,7 @@ await build({
       "svelte-kit",
       "sveltekit",
       "svelte",
-      "modal",
+      "vercel",
       "python",
     ],
     engines: {
@@ -68,7 +67,6 @@ await build({
     },
     dependencies: {
       "zx": "^7.0.0",
-      "rollup-plugin-globsync": "ConProgramming/rollup-plugin-globsync#650e6b4", //update ref
     },
     peerDependencies: {
       "vite": "^4.0.0",
@@ -79,5 +77,7 @@ await build({
 // post build steps
 await copy("LICENSE.md", "npm/LICENSE.md");
 await copy("README.md", "npm/README.md");
-await copy("src/bin.mjs", "npm/bin.mjs");
-await copy("src/vite/sveltekit_modal", "npm/esm/src/vite/sveltekit_modal");
+await copy(
+  "src/vite/sveltekit_python_vercel",
+  "npm/esm/src/vite/sveltekit_python_vercel"
+);

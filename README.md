@@ -69,7 +69,110 @@ Write Python endpoints in [SvelteKit](https://kit.svelte.dev/) and seamlessly de
   }
   ```
 
+- Write some `+server.py` endpoints. See the example section below.
 
+## Testing Locally
+Using [Poetry](https://python-poetry.org/) to manage your virtual environments with this package is recommended. 
+
+- Run `poetry init` to create a new virtual environment, and follow the steps. Or simply create a `pyproject.toml` like the one below.
+
+  ```toml
+  [tool.poetry]
+  name = "sveltekit-python-example"
+  version = "0.1.0"
+  description = ""
+  authors = ["Your Name <email@gmail.com>"]
+  readme = "README.md"
+
+  [tool.poetry.dependencies]
+  python = "^3.9"
+  fastapi = "^0.95.1"
+  uvicorn = "^0.22.0"
+
+
+  [build-system]
+  requires = ["poetry-core"]
+  build-backend = "poetry.core.masonry.api"
+  ```
+- Required packages are python3.9 (that is what Vercel's runtime uses), `fastapi`, and `uvicorn`.
+- Install whatever other dependencies you need from pypi using `poetry add package-name`
+
+- Run `pnpm dev` or `npm dev`
+
+
+## Example
+
+- Frontend: `/src/routes/py/+page.svelte`
+  ```html
+  <script lang="ts">
+    let a = 0;
+    let b = 0;
+    let total = 0;
+
+    async function pyAddPost() {
+      const response = await fetch('/py', {
+        method: 'POST',
+        body: JSON.stringify({ a, b }),
+        headers: {
+          'content-type': 'application/json'
+        }
+      });
+      let res = await response.json();
+      total = res.sum;
+    }
+
+    async function pyAddGet() {
+      const response = await fetch(`/py?a=${a}&b=${b}`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json'
+        }
+      });
+
+      let res = await response.json();
+      total = res.sum;
+    }
+  </script>
+
+  <h1>This is a SvelteKit page with a python backend.</h1>
+
+  <h3>POST Example</h3>
+  <form>
+    <input type="number" name="a" placeholder="Number 1" bind:value={a} />
+    <input type="number" name="b" placeholder="Number 2" bind:value={b} />
+    <button on:click|preventDefault={pyAddPost}>Add</button>
+  </form>
+  <h4>Total: {total}</h4>
+
+  <br />
+
+  <h3>GET Example</h3>
+  <form>
+    <input type="number" name="a" placeholder="Number 1" bind:value={a} />
+    <input type="number" name="b" placeholder="Number 2" bind:value={b} />
+    <button on:click|preventDefault={pyAddGet}>Add</button>
+  </form>
+  <h4>Total: {total}</h4>
+  ```
+
+- Backend: `/src/routes/py/+server.py`
+  ```python
+  from pydantic import BaseModel
+
+
+  class NumberSet(BaseModel):
+      a: float
+      b: float
+
+
+  async def POST(numberSet: NumberSet):
+      return {"sum": float(numberSet.a) + float(numberSet.b)}
+
+
+  async def GET(a, b):
+      return {"sum": float(a) + float(b)}
+
+  ```
 
 ## Caveats
 

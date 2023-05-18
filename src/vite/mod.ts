@@ -48,7 +48,7 @@ export interface SveltekitPythonOptions {
   port?: number;
 }
 
-export async function sveltekit_python(
+export async function sveltekit_python_vercel(
   opts: SveltekitPythonOptions = {}
 ): Promise<Plugin[]> {
   const child_processes: ProcessPromise[] = [];

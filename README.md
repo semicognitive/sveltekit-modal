@@ -224,6 +224,7 @@ Check out the awesome [sveltekit-modal](https://github.com/semicognitive/sveltek
 
 ## Possible future plans
 
+- [ ] Make API endpoints work with wildcard urls (e.g. `src/routes/user/[username]/+server.py) This currently throws an error during build.
 - [ ] Generate endpoints (/api folder) automatically during build
   - [ ] Auto create requirements.txt from pyproject.toml (both related to vercel functions being checked/handled before build)
 - [ ] Add form actions

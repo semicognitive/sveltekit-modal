@@ -52,6 +52,9 @@ if __name__ == "__main__":
         # Convert the relative path to a string and remove the file extension
         api_path = "/" + str(rel_path.parent)
         
+        # Replace square brackets with curly brackets
+        api_path = api_path.replace('[', '{').replace(']', '}')
+        
         print("ADDING API PATH:", rel_path, api_path)
         
         if hasattr(mod, 'GET'):

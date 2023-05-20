@@ -22,6 +22,9 @@ for module_path in glob.glob('./**/+server.py', recursive=True):
     
     api_route = module_path[1:] if module_path.startswith('./') else module_path
     api_route = str(Path(api_route).parent)
+    
+    # Replace square brackets with curly brackets
+    api_route = api_route.replace('[', '{').replace(']', '}')
 
     mod = importlib.import_module(module_name, module_package)
 

@@ -25,7 +25,8 @@ for module_path in glob.glob(str(root_dir / 'src/routes/**/+server.py'), recursi
     
     # replace the root_dir with api_dir
     api_route = api_dir / Path(module_path).absolute().relative_to(root_dir / "src/routes")
-    
+    api_route = Path(str(api_route).replace('[', '{').replace(']', '}'))
+
     if not api_route.parent.exists():
         api_route.parent.mkdir(parents=True)
     

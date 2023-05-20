@@ -232,4 +232,5 @@ Check out the awesome [sveltekit-modal](https://github.com/semicognitive/sveltek
   - [ ] Auto create requirements.txt from pyproject.toml (both related to vercel functions being checked/handled before build)
 - [ ] Add form actions
 - [ ] Add load functions
-- [ ] Add helper functions to automatically call API endpoints in project
+- [ ] Add helper functions to automatically call API endpoints in project\
+- [ ] Add hot reloading in dev mode

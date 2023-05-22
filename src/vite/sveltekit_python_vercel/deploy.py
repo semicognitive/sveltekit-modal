@@ -27,47 +27,22 @@ for module_path in glob.glob('./**/+server.py', recursive=True):
     api_route = api_route.replace('[', '{').replace(']', '}')
 
     mod = importlib.import_module(module_name, module_package)
-
-    if hasattr(mod, 'GET'):
-        app.add_api_route(api_route, mod.GET, methods=["GET"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [GET] at {api_route}")
-
-    if hasattr(mod, 'get'):
-        app.add_api_route(api_route, mod.get, methods=["GET"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [GET] at {api_route}")
-
-    if hasattr(mod, 'POST'):
-        app.add_api_route(api_route, mod.POST, methods=["POST"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [POST] at {api_route}")
-
-    if hasattr(mod, 'post'):
-        app.add_api_route(api_route, mod.post, methods=["POST"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [POST] at {api_route}")
-
-    if hasattr(mod, 'PATCH'):
-        app.add_api_route(api_route, mod.PATCH, methods=["PATCH"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [PATCH] at {api_route}")
-
-    if hasattr(mod, 'patch'):
-        app.add_api_route(api_route, mod.patch, methods=["PATCH"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [PATCH] at {api_route}")
-
-    if hasattr(mod, 'PUT'):
-        app.add_api_route(api_route, mod.PUT, methods=["PUT"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [PUT] at {api_route}")
-
-    if hasattr(mod, 'put'):
-        app.add_api_route(api_route, mod.put, methods=["PUT"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [PUT] at {api_route}")
-
-    if hasattr(mod, 'DELETE'):
-        app.add_api_route(api_route, mod.DELETE, methods=["DELETE"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [DELETE] at {api_route}")
-
-    if hasattr(mod, 'delete'):
-        app.add_api_route(api_route, mod.delete, methods=["DELETE"])
-        print(f"PYTHON ENDPOINT: Added {module_path} [DELETE] at {api_route}")
-
+    
+    # Add endpoints
+    for method in ["GET", "POST", "PATCH", "PUT", "DELETE"]:
+        
+        # Check for duplicate methods
+        if hasattr(mod, method) and hasattr(mod, method.lower()):
+            raise Exception(
+                f"Duplicate method {method} and {method.lower()} in {api_route}"
+            )
+            
+        elif hasattr(mod, method):
+            app.add_api_route(api_route, getattr(mod, method), methods=[method])
+            print(f"PYTHON ENDPOINT: Added {module_path} [{method}] at {api_route}")
+        elif hasattr(mod, method.lower()):
+            app.add_api_route(api_route, getattr(mod, method.lower()), methods=[method])
+            print(f"PYTHON ENDPOINT: Added {module_path} [{method}] at {api_route}")
 
 @app.exception_handler(Exception)
 async def unicorn_exception_handler(request: Request, exc: Exception):

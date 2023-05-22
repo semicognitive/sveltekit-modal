@@ -55,32 +55,18 @@ for module_path in glob.glob(route_dir.joinpath("**/+server.py").as_posix(), rec
     if hasattr(mod, 'GET'):
         app.add_api_route(api_path, mod.GET, methods=["GET"])
 
-    if hasattr(mod, 'get'):
-        app.add_api_route(api_path, mod.get, methods=["GET"])
+    # Add endpoints
+    for method in ["GET", "POST", "PATCH", "PUT", "DELETE"]:
+        # Check for duplicate methods
+        if hasattr(mod, method) and hasattr(mod, method.lower()):
+            raise Exception(
+                f"Duplicate method {method} and {method.lower()} in {api_route}"
+            )
+        elif hasattr(mod, method):
+            app.add_api_route(api_path, getattr(mod, method), methods=[method])
+        elif hasattr(mod, method.lower()):
+            app.add_api_route(api_path, getattr(mod, method.lower()), methods=[method])
 
-    if hasattr(mod, 'POST'):
-        app.add_api_route(api_path, mod.POST, methods=["POST"])
-
-    if hasattr(mod, 'post'):
-        app.add_api_route(api_path, mod.post, methods=["POST"])
-
-    if hasattr(mod, 'PATCH'):
-        app.add_api_route(api_path, mod.PATCH, methods=["PATCH"])
-
-    if hasattr(mod, 'patch'):
-        app.add_api_route(api_path, mod.patch, methods=["PATCH"])
-
-    if hasattr(mod, 'PUT'):
-        app.add_api_route(api_path, mod.PUT, methods=["PUT"])
-
-    if hasattr(mod, 'put'):
-        app.add_api_route(api_path, mod.put, methods=["PUT"])
-
-    if hasattr(mod, 'DELETE'):
-        app.add_api_route(api_path, mod.DELETE, methods=["DELETE"])
-
-    if hasattr(mod, 'delete'):
-        app.add_api_route(api_path, mod.delete, methods=["DELETE"])
 
 if __name__ == "__main__":
     uvicorn.run(

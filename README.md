@@ -101,9 +101,11 @@ Using [Poetry](https://python-poetry.org/) to manage your virtual environments w
 
   [tool.poetry.dependencies]
   python = "^3.9"
-  fastapi = "^0.95.1"
+  fastapi = "^0.95.2"
   uvicorn = "^0.22.0"
-
+  
+  [tool.poetry.group.dev.dependencies]
+  watchfiles = "^0.19.0"
 
   [build-system]
   requires = ["poetry-core"]
@@ -204,12 +206,12 @@ Note:
       b: float
 
 
-  async def POST(numberSet: NumberSet):
-      return {"sum": float(numberSet.a) + float(numberSet.b)}
+  async def POST(data: NumberSet):
+      return {"sum": data.a + data.b}
 
 
-  async def GET(a, b):
-      return {"sum": float(a) + float(b)}
+  async def GET(a:float, b:float):
+      return {"sum": a + b}
 
   ```
 
@@ -229,8 +231,8 @@ Check out the awesome [sveltekit-modal](https://github.com/semicognitive/sveltek
 ## Possible future plans
 
 - [ ] Generate endpoints (/api folder) automatically during build
-  - [ ] Auto create requirements.txt from pyproject.toml (both related to vercel functions being checked/handled before build)
+  - [X] Auto create requirements.txt from pyproject.toml (both related to vercel functions being checked/handled before build)
 - [ ] Add form actions
 - [ ] Add load functions
 - [ ] Add helper functions to automatically call API endpoints in project\
-- [ ] Add hot reloading in dev mode
+- [X] Add hot reloading in dev mode

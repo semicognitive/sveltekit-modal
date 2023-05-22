@@ -1,7 +1,7 @@
-import os
 import glob
 import importlib
 import importlib.util
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -32,20 +32,40 @@ for module_path in glob.glob('./**/+server.py', recursive=True):
         app.add_api_route(api_route, mod.GET, methods=["GET"])
         print(f"PYTHON ENDPOINT: Added {module_path} [GET] at {api_route}")
 
+    if hasattr(mod, 'get'):
+        app.add_api_route(api_route, mod.get, methods=["GET"])
+        print(f"PYTHON ENDPOINT: Added {module_path} [GET] at {api_route}")
+
     if hasattr(mod, 'POST'):
         app.add_api_route(api_route, mod.POST, methods=["POST"])
+        print(f"PYTHON ENDPOINT: Added {module_path} [POST] at {api_route}")
+
+    if hasattr(mod, 'post'):
+        app.add_api_route(api_route, mod.post, methods=["POST"])
         print(f"PYTHON ENDPOINT: Added {module_path} [POST] at {api_route}")
 
     if hasattr(mod, 'PATCH'):
         app.add_api_route(api_route, mod.PATCH, methods=["PATCH"])
         print(f"PYTHON ENDPOINT: Added {module_path} [PATCH] at {api_route}")
 
+    if hasattr(mod, 'patch'):
+        app.add_api_route(api_route, mod.patch, methods=["PATCH"])
+        print(f"PYTHON ENDPOINT: Added {module_path} [PATCH] at {api_route}")
+
     if hasattr(mod, 'PUT'):
         app.add_api_route(api_route, mod.PUT, methods=["PUT"])
         print(f"PYTHON ENDPOINT: Added {module_path} [PUT] at {api_route}")
 
+    if hasattr(mod, 'put'):
+        app.add_api_route(api_route, mod.put, methods=["PUT"])
+        print(f"PYTHON ENDPOINT: Added {module_path} [PUT] at {api_route}")
+
     if hasattr(mod, 'DELETE'):
         app.add_api_route(api_route, mod.DELETE, methods=["DELETE"])
+        print(f"PYTHON ENDPOINT: Added {module_path} [DELETE] at {api_route}")
+
+    if hasattr(mod, 'delete'):
+        app.add_api_route(api_route, mod.delete, methods=["DELETE"])
         print(f"PYTHON ENDPOINT: Added {module_path} [DELETE] at {api_route}")
 
 

@@ -22,10 +22,9 @@ const get_pyServerEndpointAsString = (app_url: URL, serve = false) => `
           fullURL = new URL('/api' + url.pathname, new URL('${app_url}')) + url.search;
         }
 
-        console.log(\`Reached python endpoint of \${method} \${fullURL}\`)
+        console.log(\`PY: Reached python endpoint of \${method} \${fullURL}\`)
         let requestBody = await request.clone().text();
-        console.log(\`Body: \${requestBody}\`);
-        console.log(\`Content-Type: \${request.headers.get('content-type')}\`);
+        console.log(\`PY: Body: \${requestBody}\`);
 
         if (method === 'GET') {
           requestBody = null;
@@ -114,11 +113,11 @@ export async function sveltekit_python_vercel(
     name: "vite-plugin-sveltekit_python-build",
     apply: "build",
     async configResolved(config) {
-      console.log("BUILD DEBUG");
+      console.log("PY: BUILD DEBUG");
 
-      console.log("ROOT PATH: " + config.root);
+      console.log("PY: ROOT PATH: " + config.root);
       console.log(
-        "LOADED VERCEL URL: " + loadEnv("", config.root, "").VERCEL_URL
+        "PY: LOADED VERCEL URL: " + loadEnv("", config.root, "").VERCEL_URL
       );
 
       const packagelocation = path.join(
@@ -128,7 +127,7 @@ export async function sveltekit_python_vercel(
         "esm/src/vite"
       );
 
-      console.log("PACKAGE LOCATION: " + packagelocation);
+      console.log("PY: PACKAGE LOCATION: " + packagelocation);
 
       const python_path = opts.python_path ?? (await which("python3"));
       await run$`cd ${packagelocation}`;
@@ -147,7 +146,7 @@ export async function sveltekit_python_vercel(
       // get current Vercel deploy URL
       sveltekit_url = new URL(api_url);
 
-      console.log("Build API URL: " + sveltekit_url.toString());
+      console.log("PY: Build API URL: " + sveltekit_url.toString());
     },
   };
 

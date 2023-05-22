@@ -2,7 +2,7 @@ import glob
 import importlib
 import importlib.util
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
@@ -25,6 +25,9 @@ for module_path in glob.glob('./**/+server.py', recursive=True):
     
     # Replace square brackets with curly brackets
     api_route = api_route.replace('[', '{').replace(']', '}')
+    
+    # remove any groups from the URL
+    api_route = str(PurePosixPath(*[part for part in PurePosixPath(api_route).parts if not part.startswith("(") and not part.endswith(")")]))
 
     mod = importlib.import_module(module_name, module_package)
     

@@ -3,7 +3,7 @@ import glob
 import importlib
 import importlib.util
 import shutil
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 import uvicorn
 from fastapi import FastAPI
@@ -53,6 +53,9 @@ for module_path in glob.glob(
 
     # Replace square brackets with curly brackets
     api_path = api_path.replace("[", "{").replace("]", "}")
+    
+    # remove any groups from the URL
+    api_path = str(PurePosixPath(*[part for part in PurePosixPath(api_path).parts if not part.startswith("(") and not part.endswith(")")]))
 
     # Add endpoints
     for method in ["GET", "POST", "PATCH", "PUT", "DELETE"]:

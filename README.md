@@ -210,7 +210,7 @@ Note:
       return {"sum": data.a + data.b}
 
 
-  async def GET(a:float, b:float):
+  async def GET(a: float, b: float):
       return {"sum": a + b}
 
   ```

@@ -114,6 +114,10 @@ export async function sveltekit_python_vercel(
     name: "vite-plugin-sveltekit_python-build",
     apply: "build",
     async configResolved(config) {
+      console.log("Generate requirements.txt...");
+
+      await run$ `poetry export -f requirements.txt --output requirements.txt --without-hashes`;
+
       console.log("BUILD DEBUG");
 
       console.log("ROOT PATH: " + config.root);

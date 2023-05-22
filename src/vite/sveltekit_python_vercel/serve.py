@@ -22,15 +22,16 @@ api_dir = Path("./sveltekit_python_vercel").absolute()
 
 route_dir = root_dir.joinpath("src/routes")
 
-watch_modules = [] # list of modules to watch for changes
+watch_modules = []  # list of modules to watch for changes
 
-for module_path in glob.glob(route_dir.joinpath("**/+server.py").as_posix(), recursive=True):
-
+for module_path in glob.glob(
+    route_dir.joinpath("**/+server.py").as_posix(), recursive=True
+):
     abs_module_path = Path(module_path).absolute()
 
     watch_modules.append(abs_module_path.parent.as_posix())
 
-    api_route = api_dir.joinpath(abs_module_path.relative_to(root_dir/ "src/routes"))
+    api_route = api_dir.joinpath(abs_module_path.relative_to(root_dir / "src/routes"))
 
     if not api_route.parent.exists():
         api_route.parent.mkdir(parents=True)
@@ -41,9 +42,7 @@ for module_path in glob.glob(route_dir.joinpath("**/+server.py").as_posix(), rec
     module_name = api_route.stem
 
     spec = importlib.util.spec_from_file_location(module_name, api_route)
-
     mod = importlib.util.module_from_spec(spec)
-
     spec.loader.exec_module(mod)
 
     # Get the relative path of the module from the API directory
@@ -52,8 +51,8 @@ for module_path in glob.glob(route_dir.joinpath("**/+server.py").as_posix(), rec
     # Convert the relative path to a string and remove the file extension
     api_path = f"/{rel_path.parent}"
 
-    if hasattr(mod, 'GET'):
-        app.add_api_route(api_path, mod.GET, methods=["GET"])
+    # Replace square brackets with curly brackets
+    api_path = api_path.replace("[", "{").replace("]", "}")
 
     # Add endpoints
     for method in ["GET", "POST", "PATCH", "PUT", "DELETE"]:
@@ -71,10 +70,10 @@ for module_path in glob.glob(route_dir.joinpath("**/+server.py").as_posix(), rec
 if __name__ == "__main__":
     uvicorn.run(
         "sveltekit_python_vercel.serve:app",
-        host=args.host, 
+        host=args.host,
         port=args.port,
         log_level="info",
         reload=True,
         reload_includes=[*set(watch_modules)],
-        reload_excludes=[api_dir.as_posix()]
+        reload_excludes=[api_dir.as_posix()],
     )
